@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sačuvaj Vodu</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #ff0000, #ff9900, #33cc33, #0099ff, #9900cc);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s infinite linear;
+            color: white;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .question {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .answer {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .answer:hover {
+            background-color: #ccc;
+        }
+
+        .correct {
+            background-color: #4CAF50;
+        }
+
+        .incorrect {
+            background-color: #f44336;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sačuvaj Vodu</h1>
+        <p>Uskoro će nestati pitke vode, klima će se značajno promeniti i to utiče na nas ljude.</p>
+
+        <div id="quiz-container">
+            <div class="question active">
+                <p>1. Koliko je površine pokriveno vodom na Zemlji?</p>
+                <div class="answer" data-correct="false">10%</div>
+                <div class="answer" data-correct="false">20%</div>
+                <div class="answer" data-correct="true">71%</div>
+                <div class="answer" data-correct="false">50%</div>
+            </div>
+
+            <div class="question">
+                <p>2. Koliko je te vode dostupno za piće?</p>
+                <div class="answer" data-correct="false">5%</div>
+                <div class="answer" data-correct="false">1%</div>
+                <div class="answer" data-correct="true">0.5%</div>
+                <div class="answer" data-correct="false">10%</div>
+            </div>
+
+            <div class="question">
+                <p>3. Koja je najveća reka na svetu?</p>
+                <div class="answer" data-correct="false">Nil</div>
+                <div class="answer" data-correct="true">Amazon</div>
+                <div class="answer" data-correct="false">Sava</div>
+                <div class="answer" data-correct="false">Yangtze</div>
+            </div>
+
+            <div class="question">
+                <p>4. Koja je najveća reka u Bosni?</p>
+                <div class="answer" data-correct="false">Drina</div>
+                <div class="answer" data-correct="false">Bosna</div>
+                <div class="answer" data-correct="true">Sava</div>
+                <div class="answer" data-correct="false">Una</div>
+            </div>
+
+            <div class="question">
+                <p>5. Koja je najveća reka u Bijeljini?</p>
+                <div class="answer" data-correct="false">Drina</div>
+                <div class="answer" data-correct="true">Sava</div>
+                <div class="answer" data-correct="false">Bosna</div>
+                <div class="answer" data-correct="false">Una</div>
+            </div>
+
+            <div class="question">
+                <p>6. Koje je najslanije more?</p>
+                <div class="answer" data-correct="false">Jadransko more</div>
+                <div class="answer" data-correct="true">Crveno more</div>
+                <div class="answer" data-correct="false">Baltičko more</div>
+                <div class="answer" data-correct="false">Mrtvo more</div>
+            </div>
+
+            <button id="finish-quiz" style="display: none;">Završite kviz</button>
+        </div>
+
+        <div id="result" style="display: none;">
+            <h2 class="result">Rezultat:</h2>
+            <p id="score"></p>
+            <p>Hvala što ste učestvovali!</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = document.querySelectorAll('.question');
+        const finishButton = document.getElementById('finish-quiz');
+        const resultContainer = document.getElementById('result');
+        const scoreElement = document.getElementById('score');
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                questions[currentQuestionIndex].classList.remove('active');
+                currentQuestionIndex++;
+                questions[currentQuestionIndex].classList.add('active');
+            } else {
+                finishButton.style.display = 'block';
+            }
+        }
+
+        function calculateScore() {
+            scoreElement.textContent = `Osvojili ste ${score} od ${questions.length} poena.`;
+            resultContainer.style.display = 'block';
+        }
+
+        finishButton.addEventListener('click', calculateScore);
+
+        document.querySelectorAll('.answer').forEach(answer => {
+            answer.addEventListener('click', function() {
+                const correct = answer.getAttribute('data-correct') === 'true';
+                if (correct) {
+                    score++;
+                    answer.classList.add('correct');
+                } else {
+                    answer.classList.add('incorrect');
+                }
+                setTimeout(showNextQuestion, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

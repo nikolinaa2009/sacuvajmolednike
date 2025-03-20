@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anketa - Sačuvaj Vodu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #c2e9fb, #9ae3f0);
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #1a73e8;
+    }
+    .question {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .answer-button {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .answer-button:hover {
+      background-color: #1558b2;
+    }
+    .thank-you {
+      display: none;
+      font-size: 22px;
+      color: #4CAF50;
+      margin-top: 30px;
+    }
+    #image-container {
+      margin-top: 20px;
+      display: none;
+    }
+    .image-container img {
+      width: 100px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Anketa: Sačuvaj Vodu</h2>
+    <div id="question-container">
+      <div class="question" id="question"></div>
+      <button class="answer-button" id="answer-1" onclick="nextQuestion(1)"></button>
+      <button class="answer-button" id="answer-2" onclick="nextQuestion(2)"></button>
+      <button class="answer-button" id="answer-3" onclick="nextQuestion(3)"></button>
+      <button class="answer-button" id="answer-4" onclick="nextQuestion(4)"></button>
+    </div>
+    <div class="thank-you" id="thank-you">
+      Hvala što ste učestvovali! Vodite računa o vodi i okolini!
+    </div>
+    <div id="image-container">
+      <img src="https://example.com/water-drop-image.png" alt="Kapljica vode drži planetu">
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Koliko dnevno vode popijete?",
+        answers: ["1L", "2L", "3L", "Nisam siguran/a"]
+      },
+      {
+        question: "Koliko često ostavite vodu da teče iz česme kada vam ne treba?",
+        answers: ["Nikada", "Ponekad", "Često", "Uvek"]
+      },
+      {
+        question: "Da li mislite da trošimo vodu na gluposti?",
+        answers: ["Da", "Ne", "Nekada", "Ne znam"]
+      },
+      {
+        question: "Da li ostavljate vodu da teče dok perete ruke?",
+        answers: ["Da", "Ne", "Ponekad", "Nisam siguran/a"]
+      },
+      {
+        question: "Da li često zaboravite zatvoriti česmu?",
+        answers: ["Da", "Ne", "Ponekad", "Nisam siguran/a"]
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function nextQuestion(answer) {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showThankYou();
+      }
+    }
+
+    function showQuestion() {
+      const question = questions[currentQuestionIndex];
+      document.getElementById('question').innerText = question.question;
+
+      for (let i = 0; i < 4; i++) {
+        document.getElementById('answer-' + (i + 1)).innerText = question.answers[i];
+      }
+    }
+
+    function showThankYou() {
+      document.getElementById('question-container').style.display = 'none';
+      document.getElementById('thank-you').style.display = 'block';
+      document.getElementById('image-container').style.display = 'block';
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
